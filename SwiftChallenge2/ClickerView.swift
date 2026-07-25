@@ -13,6 +13,8 @@ struct ClickerView: View {
     // you need a state variable.
     @State private var counter = 0
     @State private var message = ""
+    @State private var showLeaderboard = false
+    @State private var playerName = "Player"
     @AppStorage("highscore") private var highscore = 0
     
     func updateMessage() {
@@ -21,6 +23,13 @@ struct ClickerView: View {
     
     var body: some View {
         VStack {
+            Button {
+                showLeaderboard = true
+            } label: {
+                Label("Leaderboard", systemImage: "trophy.fill")
+            }
+            .buttonStyle(.glassProminent)
+            
             Text(message)
             Spacer()
             
@@ -41,6 +50,10 @@ struct ClickerView: View {
                 updateMessage()
             }
                 .buttonStyle(.glassProminent)
+        }
+        .sheet(isPresented: $showLeaderboard) {
+            ClickerLeaderboardView()
+                .presentationDetents([.medium])
         }
         .padding()
     }
