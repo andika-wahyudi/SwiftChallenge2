@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PostsView: View {
-    let colors: [Color] = [.red, .blue, .green, .orange, .purple]
+    let colors: [Color] = [.red, .blue, .green, .orange, .pink]
     
     @State private var currentIndex: Int = 0
     @State private var flippedStates: [Bool] = [false, false, false, false, false]
@@ -23,17 +23,6 @@ struct PostsView: View {
                         .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
                         .frame(height: 380)
                         .padding(.horizontal, 40)
-                    // Flip Effect
-                        .rotation3DEffect(
-                            .degrees(flippedStates[index] ? 180 : 0),
-                            axis: (x: 0.0, y: 1.0, z: 0.0)
-                        )
-                        .onTapGesture {
-                            withAnimation(.easeInOut(duration: 0.4)) {
-                                flippedStates[index].toggle()
-                            }
-                        }
-                        .tag(index)
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
