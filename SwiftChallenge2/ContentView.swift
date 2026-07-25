@@ -9,11 +9,13 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView {
+            Tab("Clicker", systemImage: "pointer.arrow.ipad.rays") {
+                ClickerView()
+            }
+            Tab("Posts", systemImage: "square.and.arrow.up.on.square.fill") {
+                PostsView()
+            }
         }
         .padding()
     }
