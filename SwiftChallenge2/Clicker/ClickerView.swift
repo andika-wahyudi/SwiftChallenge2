@@ -53,8 +53,8 @@ struct ClickerView: View {
                 .buttonStyle(.glassProminent)
         }
         .sheet(isPresented: $showLeaderboard) {
+
             ClickerLeaderboardView(scoreManager: ScoreManager())
-                .presentationDetents([.medium])
         }
         .padding()
     }

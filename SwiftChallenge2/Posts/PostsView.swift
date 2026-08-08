@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PostsView: View {
-    let colors: [Color] = [.red, .blue, .green, .orange, .purple]
+    let colors: [Color] = [.red, .blue, .green, .orange, .pink]
     
     @State private var currentIndex: Int = 0
     @ObservedObject var firestoreManager: FirestoreManager
@@ -32,16 +32,14 @@ struct PostsView: View {
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
-            
-            Text("Card \(firestoreManager.notes.isEmpty ? 0 :currentIndex + 1) of \(firestoreManager.notes.count)")
-                .font(.caption)
-                .foregroundColor(.gray)
+            Text("Post \(firestoreManager.notes.isEmpty ? 0 :currentIndex + 1) of \(firestoreManager.notes.count)")
             
             TextField(
                 "Text",
                 text: $text
             )
             .border(.black)
+            
             HStack{
                 Button("Save") {
                     firestoreManager.addNote(text:text)
@@ -57,15 +55,17 @@ struct PostsView: View {
                 
                 .foregroundStyle(.red)
                 .padding(.horizontal,30)
+                // FIXED: This starts the listener when the user opens the screen very IMPT
+                .onAppear {
+                    firestoreManager.getNotes()
+                }
             }
+            
         }
-        .padding()
-        // FIXED: This starts the listener when the user opens the screen very IMPT
-        .onAppear {
-            firestoreManager.getNotes()
-        }
+        
     }
 }
+
 
 // used gemni help me debug 😅
 #Preview {
