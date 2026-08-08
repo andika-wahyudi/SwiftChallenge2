@@ -1,0 +1,15 @@
+//
+//  ScoreModel.swift
+//  SwiftChallenge2
+//
+//  Created by Lim Shi Hui Serene     on 7/8/26.
+//
+
+import Foundation
+import FirebaseFirestore
+
+struct HighScore: Identifiable, Codable {
+    @DocumentID var id: String?
+    var yourScore: Int
+}
+

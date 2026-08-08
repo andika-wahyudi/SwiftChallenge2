@@ -7,7 +7,6 @@
 
 import SwiftUI
 import FirebaseCore
-import FirebaseFirestore
 
 
 @main
@@ -22,3 +21,5 @@ struct SwiftChallenge2App: App {
         }
     }
 }
+
+

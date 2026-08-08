@@ -11,11 +11,12 @@ struct ContentView: View {
     var body: some View {
         TabView {
             Tab("Clicker", systemImage: "pointer.arrow.ipad.rays") {
-                ClickerView()
+                ClickerView(scoreManager: ScoreManager())
             }
             Tab("Posts", systemImage: "square.and.arrow.up.on.square.fill") {
-                PostsView()
+                PostsView(firestoreManager: FirestoreManager())
             }
+
         }
         .padding()
     }
