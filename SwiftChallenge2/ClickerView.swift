@@ -23,10 +23,8 @@ struct ClickerView: View {
     
     var body: some View {
         VStack {
-            Button {
+            Button("Leaderboard") {
                 showLeaderboard = true
-            } label: {
-                Label("Leaderboard", systemImage: "trophy.fill")
             }
             .buttonStyle(.glassProminent)
             

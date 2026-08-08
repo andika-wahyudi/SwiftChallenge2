@@ -26,7 +26,7 @@ struct PostsView: View {
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
-            Text("Card \(currentIndex + 1) of \(colors.count)")
+            Text("Post \(currentIndex + 1) of \(colors.count)")
                 .font(.caption)
                 .foregroundColor(.gray)
         }
