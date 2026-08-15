@@ -16,12 +16,9 @@ struct ClickerView: View {
     @State private var message = ""
     @State private var showLeaderboard = false
     @State private var playerName = "Player"
-    @AppStorage("highscore") private var highscore = 0
+    @State private var highscore = 0
     @ObservedObject var scoreManager: ScoreManager
     
-    func updateMessage() {
-        //message = scoreManager.scores.yourScore
-    }
     
     var body: some View {
         VStack {
@@ -30,7 +27,7 @@ struct ClickerView: View {
             }
             .buttonStyle(.glassProminent)
             
-            Text(message)
+            Text("Highscore: \(highscore)")
             Spacer()
             
             Image(.jiachen)
@@ -48,7 +45,6 @@ struct ClickerView: View {
                     highscore = counter
                     scoreManager.addNote(playerName: playerName, yourScore: highscore)
                 }
-                updateMessage()
             }
                 .buttonStyle(.glassProminent)
         }
@@ -56,6 +52,9 @@ struct ClickerView: View {
             ClickerLeaderboardView(scoreManager: ScoreManager())
         }
         .padding()
+        .onAppear {
+            scoreManager.getNotes()
+        }
     }
 }
 
