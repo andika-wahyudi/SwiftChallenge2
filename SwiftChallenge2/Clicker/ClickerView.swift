@@ -27,7 +27,7 @@ struct ClickerView: View {
             }
             .buttonStyle(.glassProminent)
             
-            Text("Highscore: \(highscore)")
+            Text("Highscore: \(scoreManager.scores.first?.yourScore ?? 0)")
             Spacer()
             
             Image(.jiachen)
@@ -41,7 +41,7 @@ struct ClickerView: View {
             
             Button("I love Swift") {
                 counter += 1
-                if highscore < counter {
+                if scoreManager.scores.first?.yourScore ?? 0 < counter {
                     highscore = counter
                     scoreManager.addNote(playerName: playerName, yourScore: highscore)
                 }
