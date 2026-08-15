@@ -12,27 +12,26 @@ import Combine
 class ScoreManager: ObservableObject {
     private var db = Firestore.firestore()
     @Published var scores = [HighScore]()
+    private var listener: ListenerRegistration? //
     
     // Create Note
-    func addNote(yourScore: Int) {
-        let newScore = HighScore(yourScore: yourScore)
-        
+    func addNote(playerName: String, yourScore: Int) {
         do {
-            _ = try db.collection("Scores").addDocument(from: newScore) //adds the newNote doc in notes collection
+            _ = try db.collection("Scores").document(playerName).setData(from: HighScore(name: playerName, yourScore: yourScore))//adds the newNote doc in notes collection
         } catch {
-            print("Error adding document: \(error)") // in case got error this is a failsafe
+            print("Error saving score: \(error)") // in case got error this is a failsafe
         }
     }
     
     // Read Notes
     func getNotes() {
-        db.collection("Scores").order(by: "yourScore").addSnapshotListener { snapshot, error in
-            //sorts in alphabetical (.order(by: "model var name")) addSnapshotListener triggers when it detects an update
+        listener?.remove()
+        listener = db.collection("Scores").order(by: "yourScore", descending: true).addSnapshotListener { snapshot, error in
+            //sorts in descending alphabetical (.order(by: "model var name", descending: true)) addSnapshotListener triggers when it detects an update
             if let error = error {
-                print("Error getting notes: \(error)")
+                print("Error getting scores: \(error)")
                 return
             }
-            
             self.scores = snapshot?.documents.compactMap { document in // loops through the list of data
                 try? document.data(as: HighScore.self) // converts the raw text to the Swift note object
             } ?? [] //failsafe, incase got no data default note to blank
@@ -56,7 +55,7 @@ class ScoreManager: ObservableObject {
         
         db.collection("Scores").document(noteID).delete { error in
             if let error = error {
-                print("Error deleting note: \(error)")
+                print("Error deleting score: \(error)")
             }
         }
     }

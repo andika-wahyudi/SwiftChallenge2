@@ -10,6 +10,7 @@ import FirebaseFirestore
 
 struct HighScore: Identifiable, Codable {
     @DocumentID var id: String?
+    var name: String
     var yourScore: Int
 }
 

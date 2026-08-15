@@ -11,24 +11,14 @@ struct ClickerLeaderboardView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var scoreManager: ScoreManager
     
-    // Sample mock data
-    @State private var entries: [LeaderboardEntry] = [
-        LeaderboardEntry(name: "Serene", score: 42, date: Date()),
-        LeaderboardEntry(name: "Jiachen", score: 28, date: Date()),
-        LeaderboardEntry(name: "Andika", score: 15, date: Date()),
-        
-        LeaderboardEntry(name: "You", score:0, date: Date())
-    ]
-    @State private var isLoading = false
-    
     var body: some View {
         NavigationStack {
             Group {
-                if entries.isEmpty {
+                if scoreManager.scores.isEmpty {
                     Text("No Scores Yet")
                     Text("Be the first to get on the leaderboard!")
                 } else {
-                    List(Array(entries.enumerated()), id: \.element.id) { index, entry in
+                    List(Array(scoreManager.scores.enumerated()), id: \.element.id) { index, entry in
                         HStack {
                             // Rank Number
                             Text("#\(index + 1)")
@@ -41,14 +31,11 @@ struct ClickerLeaderboardView: View {
                                 Text(entry.name)
                                     .font(.body)
                                     .fontWeight(.bold)
-                                Text(entry.date.formatted(date: .abbreviated, time: .omitted))
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
                             }
                             Spacer()
                             
                             // Score
-                            Text("\(entry.score)")
+                            Text("\(entry.yourScore)")
                                 .font(.title3)
                                 .fontWeight(.heavy)
                         }
@@ -65,6 +52,9 @@ struct ClickerLeaderboardView: View {
                         Image(systemName: "xmark")
                     }
                 }
+            }
+            .onAppear {
+                scoreManager.getNotes()
             }
         }
     }

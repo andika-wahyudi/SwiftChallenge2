@@ -46,14 +46,13 @@ struct ClickerView: View {
                 counter += 1
                 if highscore < counter {
                     highscore = counter
-                    scoreManager.addNote(yourScore: highscore)
+                    scoreManager.addNote(playerName: playerName, yourScore: highscore)
                 }
                 updateMessage()
             }
                 .buttonStyle(.glassProminent)
         }
         .sheet(isPresented: $showLeaderboard) {
-
             ClickerLeaderboardView(scoreManager: ScoreManager())
         }
         .padding()
