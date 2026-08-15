@@ -15,7 +15,8 @@ struct ClickerView: View {
     @State private var counter = 0
     @State private var message = ""
     @State private var showLeaderboard = false
-    @State private var playerName = "Player"
+    @AppStorage("playerName") private var playerName = ""
+    @State private var showNamePrompt = false
     @State private var highscore = 0
     @ObservedObject var scoreManager: ScoreManager
     
@@ -54,6 +55,13 @@ struct ClickerView: View {
         .padding()
         .onAppear {
             scoreManager.getNotes()
+            if playerName.isEmpty {
+                showNamePrompt = true
+            }
+        }
+        .alert("Enter your name", isPresented: $showNamePrompt) {
+            TextField("Your name", text: $playerName) // saves to @AppStorage as they type
+            Button("Done") { showNamePrompt = false }
         }
     }
 }
