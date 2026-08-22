@@ -15,6 +15,7 @@ struct ClickerView: View {
     @AppStorage("counter1") private var counter = 0
     @State private var message = ""
     @State private var showLeaderboard = false
+    @State private var showSecondPlayer = false
     @AppStorage("playerName") private var playerName = ""
     @State private var showNamePrompt = false
     @AppStorage("HighScore") private var highscore = 0
@@ -32,6 +33,7 @@ struct ClickerView: View {
                         showLeaderboard = true
                     }
                     .buttonStyle(.glassProminent)
+                    .padding()
                     
                     Text("Highscore: \(highscore)")
                         .shadow(color:.white, radius: 1, x: 1, y:1)
@@ -55,7 +57,13 @@ struct ClickerView: View {
                         }
                     }
                     .buttonStyle(.glassProminent)
-                    NavigationLink("Switch to fake player", destination: SecondPlayerView(scoreManager: ScoreManager()))
+                    Button("Switch to fake player") {
+                        showSecondPlayer = true
+                    }
+                    .buttonStyle(.glassProminent)
+                }
+                .sheet(isPresented: $showSecondPlayer) {
+                    SecondPlayerView(scoreManager: ScoreManager())
                 }
                 .sheet(isPresented: $showLeaderboard) {
                     ClickerLeaderboardView(scoreManager: ScoreManager())

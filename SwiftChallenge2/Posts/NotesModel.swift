@@ -11,6 +11,7 @@ import FirebaseFirestore
 struct Note: Identifiable, Codable {
     @DocumentID var id: String? // if have ignores the document ID portion so it doen not duplicate ID
     var text: String
+    var timestamp: Date = Date() // ordered based on created
 }
 
 

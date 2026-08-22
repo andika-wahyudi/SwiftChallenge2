@@ -26,8 +26,8 @@ class FirestoreManager: ObservableObject {
     
     // Read Notes
     func getNotes() {
-        db.collection("notes").order(by: "text").addSnapshotListener { snapshot, error in
-            //sorts in alphabetical (.order(by: "model var name")) addSnapshotListener triggers when it detects an update
+        db.collection("notes").order(by: "timestamp", descending: true).addSnapshotListener { snapshot, error in
+            //sorts in time created (.order(by: "timestamp")) addSnapshotListener triggers when it detects an update
             if let error = error {
                 print("Error getting notes: \(error)")
                 return

@@ -33,6 +33,7 @@ struct SecondPlayerView: View {
                         showLeaderboard = true
                     }
                     .buttonStyle(.glassProminent)
+                    .padding()
                     
                     Text("Highscore: \(highscore)")
                         .shadow(color:.white, radius: 1, x: 1, y:1)
